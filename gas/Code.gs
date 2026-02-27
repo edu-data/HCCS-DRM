@@ -3,45 +3,96 @@
    3 Sheets: Responses, Episodes, Diagnosis
    ====================================================== */
 
+// ──────── Header Definitions ────────
+var RESPONSE_HEADERS = [
+  'RespondentID','Timestamp','PhoneNumber',
+  // HCCS Part3: Q1-Q12
+  'Q1_SelectionFactor','Q2_CourseAvailability','Q3_Guidance','Q4_CareerLink',
+  'Q5_Difficulties','Q6_SelectionImprovement',
+  'Q7_AchievementUnderstanding','Q8_AchievementFairness','Q9_FiveTierSystem','Q10_IncompleteSystem',
+  'Q11_AssessmentProblem','Q12_AssessmentImprovement',
+  // Part4 Iloh Model: Q13-Q20
+  'Q13_BiggestBarrier',
+  'Q14_InfoAccess1','Q14_InfoAccess2','Q14_InfoAccess3',
+  'Q15_InfoSources','Q16_InfoDesert',
+  'Q17_TimeUse1','Q17_TimeUse2','Q17_TimeUse3','Q17_TimeUse4',
+  'Q18_TimeDesign',
+  'Q19_OppAccess1','Q19_OppAccess2','Q19_OppAccess3','Q19_OppAccess4',
+  'Q20_OppImprovement',
+  // Part5 Wellbeing: Q21-Q29
+  'Q21_Growth','Q22_Autonomy','Q23_Flow','Q24_Belonging','Q25_Meaning',
+  'Q26_WB_Happy','Q26_WB_Confident','Q26_WB_Growth','Q26_WB_Anxious','Q26_WB_Bored','Q26_WB_Depressed',
+  'Q27_Satisfaction','Q28_IdealDay','Q29_FreeComment',
+  // Part6 Basic Info
+  'Grade','SchoolType','Region','HasSelectedCourse'
+];
+
+var EPISODE_HEADERS = [
+  'RespondentID','EpisodeID','StartTime','EndTime','Activity','Location','Companion'
+];
+
+var DIAGNOSIS_HEADERS = [
+  'RespondentID','EpisodeID','Activity',
+  'Information','InfoSources','InfoSourceEtc',
+  'Time','OpportunityChosen','OpportunityFlexible',
+  'Eudaimonia_Growth','Eudaimonia_Autonomy','Eudaimonia_Flow','Eudaimonia_Belonging','Eudaimonia_Meaning'
+];
+
+// ──────── Utility: Setup Headers on existing sheets ────────
+function setupHeaders() {
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+
+  // Responses
+  var respSheet = ss.getSheetByName('Responses');
+  if (respSheet) {
+    respSheet.insertRowBefore(1);
+    respSheet.getRange(1, 1, 1, RESPONSE_HEADERS.length).setValues([RESPONSE_HEADERS]);
+    respSheet.getRange(1, 1, 1, RESPONSE_HEADERS.length).setFontWeight('bold');
+    respSheet.setFrozenRows(1);
+  }
+
+  // Episodes
+  var epSheet = ss.getSheetByName('Episodes');
+  if (epSheet) {
+    epSheet.insertRowBefore(1);
+    epSheet.getRange(1, 1, 1, EPISODE_HEADERS.length).setValues([EPISODE_HEADERS]);
+    epSheet.getRange(1, 1, 1, EPISODE_HEADERS.length).setFontWeight('bold');
+    epSheet.setFrozenRows(1);
+  }
+
+  // Diagnosis
+  var diagSheet = ss.getSheetByName('Diagnosis');
+  if (diagSheet) {
+    diagSheet.insertRowBefore(1);
+    diagSheet.getRange(1, 1, 1, DIAGNOSIS_HEADERS.length).setValues([DIAGNOSIS_HEADERS]);
+    diagSheet.getRange(1, 1, 1, DIAGNOSIS_HEADERS.length).setFontWeight('bold');
+    diagSheet.setFrozenRows(1);
+  }
+
+  SpreadsheetApp.getUi().alert('Headers added to all sheets!');
+}
+
+// ──────── doPost: Receive survey data ────────
 function doPost(e) {
   try {
-    const data = JSON.parse(e.postData.contents);
-    const ss = SpreadsheetApp.getActiveSpreadsheet();
-    const respondentId = 'R_' + new Date().getTime();
-    const timestamp = data.timestamp || new Date().toISOString();
+    var data = JSON.parse(e.postData.contents);
+    var ss = SpreadsheetApp.getActiveSpreadsheet();
+    var respondentId = 'R_' + new Date().getTime();
+    var timestamp = data.timestamp || new Date().toISOString();
 
-    // === Sheet 1: Responses (main survey data) ===
-    let respSheet = ss.getSheetByName('Responses');
+    // === Sheet 1: Responses ===
+    var respSheet = ss.getSheetByName('Responses');
     if (!respSheet) {
       respSheet = ss.insertSheet('Responses');
-      respSheet.appendRow([
-        'RespondentID','Timestamp','PhoneNumber',
-        // HCCS: Q1-Q12
-        'Q1_SelectionFactor','Q2_CourseAvailability','Q3_Guidance','Q4_CareerLink',
-        'Q5_Difficulties','Q6_SelectionImprovement',
-        'Q7_AchievementUnderstanding','Q8_AchievementFairness','Q9_FiveTierSystem','Q10_IncompleteSystem',
-        'Q11_AssessmentProblem','Q12_AssessmentImprovement',
-        // Iloh Model: Q13-Q20
-        'Q13_BiggestBarrier',
-        'Q14_InfoAccess1','Q14_InfoAccess2','Q14_InfoAccess3',
-        'Q15_InfoSources','Q16_InfoDesert',
-        'Q17_TimeUse1','Q17_TimeUse2','Q17_TimeUse3','Q17_TimeUse4',
-        'Q18_TimeDesign',
-        'Q19_OppAccess1','Q19_OppAccess2','Q19_OppAccess3','Q19_OppAccess4',
-        'Q20_OppImprovement',
-        // Wellbeing: Q21-Q29
-        'Q21_Growth','Q22_Autonomy','Q23_Flow','Q24_Belonging','Q25_Meaning',
-        'Q26_WB_Happy','Q26_WB_Confident','Q26_WB_Growth','Q26_WB_Anxious','Q26_WB_Bored','Q26_WB_Depressed',
-        'Q27_Satisfaction','Q28_IdealDay','Q29_FreeComment',
-        // Basic Info
-        'Grade','SchoolType','Region','HasSelectedCourse'
-      ]);
+      respSheet.appendRow(RESPONSE_HEADERS);
+      respSheet.getRange(1, 1, 1, RESPONSE_HEADERS.length).setFontWeight('bold');
+      respSheet.setFrozenRows(1);
     }
 
-    const hccs = data.hccs || {};
-    const gr = data.globalReflection || {};
-    const wb = data.wellbeing || {};
-    const bi = data.basicInfo || {};
+    var hccs = data.hccs || {};
+    var gr = data.globalReflection || {};
+    var wb = data.wellbeing || {};
+    var bi = data.basicInfo || {};
 
     respSheet.appendRow([
       respondentId, timestamp, data.phoneNumber || '',
@@ -65,10 +116,12 @@ function doPost(e) {
     ]);
 
     // === Sheet 2: Episodes ===
-    let epSheet = ss.getSheetByName('Episodes');
+    var epSheet = ss.getSheetByName('Episodes');
     if (!epSheet) {
       epSheet = ss.insertSheet('Episodes');
-      epSheet.appendRow(['RespondentID','EpisodeID','StartTime','EndTime','Activity','Location','Companion']);
+      epSheet.appendRow(EPISODE_HEADERS);
+      epSheet.getRange(1, 1, 1, EPISODE_HEADERS.length).setFontWeight('bold');
+      epSheet.setFrozenRows(1);
     }
     if (data.episodes && Array.isArray(data.episodes)) {
       data.episodes.forEach(function(ep) {
@@ -76,16 +129,13 @@ function doPost(e) {
       });
     }
 
-    // === Sheet 3: Diagnosis (with eudaimonia) ===
-    let diagSheet = ss.getSheetByName('Diagnosis');
+    // === Sheet 3: Diagnosis ===
+    var diagSheet = ss.getSheetByName('Diagnosis');
     if (!diagSheet) {
       diagSheet = ss.insertSheet('Diagnosis');
-      diagSheet.appendRow([
-        'RespondentID','EpisodeID','Activity',
-        'Information','InfoSources','InfoSourceEtc',
-        'Time','OpportunityChosen','OpportunityFlexible',
-        'Eudaimonia_Growth','Eudaimonia_Autonomy','Eudaimonia_Flow','Eudaimonia_Belonging','Eudaimonia_Meaning'
-      ]);
+      diagSheet.appendRow(DIAGNOSIS_HEADERS);
+      diagSheet.getRange(1, 1, 1, DIAGNOSIS_HEADERS.length).setFontWeight('bold');
+      diagSheet.setFrozenRows(1);
     }
     if (data.diagnoses && Array.isArray(data.diagnoses)) {
       data.diagnoses.forEach(function(d) {
