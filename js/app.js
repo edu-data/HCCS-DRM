@@ -987,6 +987,7 @@
         toPart3Btn.addEventListener('click', () => {
             syncDiagnosisInputs();
             buildPart3Content();
+            setupBarrierOptions();
             goToPart(3);
         });
 
@@ -999,7 +1000,7 @@
 
         // Part 3 → 4
         const toPart4Btn = $('#toPart4Btn');
-        if (toPart4Btn) toPart4Btn.addEventListener('click', () => { buildPart4Content(); goToPart(4); });
+        if (toPart4Btn) toPart4Btn.addEventListener('click', () => { buildPart4Content(); setupBarrierOptions(); goToPart(4); });
         const backToPart3Btn = $('#backToPart3Btn');
         if (backToPart3Btn) backToPart3Btn.addEventListener('click', () => goToPart(3));
 
@@ -1011,7 +1012,7 @@
 
         // Part 5 → 6
         const toPart6Btn = $('#toPart6Btn');
-        if (toPart6Btn) toPart6Btn.addEventListener('click', () => { buildPart6Content(); goToPart(6); });
+        if (toPart6Btn) toPart6Btn.addEventListener('click', () => { buildPart6Content(); setupBarrierOptions(); goToPart(6); });
         const backToPart5Btn = $('#backToPart5Btn');
         if (backToPart5Btn) backToPart5Btn.addEventListener('click', () => goToPart(5));
 
