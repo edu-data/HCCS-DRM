@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HCCS-DRM 통합 설문 — 고교학점제와 나의 하루</title>
+    <meta name="description" content="일상재구성법(DRM)과 고교학점제(HCCS) 통합 설문조사" />
+    <link rel="stylesheet" href="css/style.css" />
+    <script src="js/config.js"></script>
+</head>
+
+<body>
+    <div class="app-container">
+        <header class="app-header">
+            <span class="app-header__badge">Research Survey 2026</span>
+            <h1 class="app-header__title">『고교학점제와 나의 하루』</h1>
+            <p class="app-header__subtitle">DRM + 교육과정 · 평가 · 정보·시간·기회 · 웰빙</p>
+        </header>
+        <nav class="progress-bar" id="progressBar">
+            <div class="progress-step" data-step="1">
+                <div class="progress-step__circle">1<span class="progress-step__label">하루 재구성</span></div>
+            </div>
+            <div class="progress-step" data-step="1-2">
+                <div class="progress-step__line"></div>
+            </div>
+            <div class="progress-step" data-step="2">
+                <div class="progress-step__circle">2<span class="progress-step__label">심층 진단</span></div>
+            </div>
+            <div class="progress-step" data-step="2-3">
+                <div class="progress-step__line"></div>
+            </div>
+            <div class="progress-step" data-step="3">
+                <div class="progress-step__circle">3<span class="progress-step__label">과목·평가</span></div>
+            </div>
+            <div class="progress-step" data-step="3-4">
+                <div class="progress-step__line"></div>
+            </div>
+            <div class="progress-step" data-step="4">
+                <div class="progress-step__circle">4<span class="progress-step__label">정보·시간·기회</span></div>
+            </div>
+            <div class="progress-step" data-step="4-5">
+                <div class="progress-step__line"></div>
+            </div>
+            <div class="progress-step" data-step="5">
+                <div class="progress-step__circle">5<span class="progress-step__label">웰빙·종합</span></div>
+            </div>
+            <div class="progress-step" data-step="5-6">
+                <div class="progress-step__line"></div>
+            </div>
+            <div class="progress-step" data-step="6">
+                <div class="progress-step__circle">6<span class="progress-step__label">기본 정보</span></div>
+            </div>
+        </nav>
+
+        <!-- INTRO -->
+        <section class="part-section active" id="partIntro">
+            <div class="glass-card intro-card">
+                <h2 class="intro-card__heading">📋 설문 안내</h2>
+                <p class="intro-card__text">본 설문은 <strong>고교학점제</strong> 시행에 따른 학생들의 일상 경험과 교육 인식을 종합적으로 조사합니다.</p>
+                <ul style="color:var(--text-secondary); font-size:0.85rem; padding-left:1.2rem; margin-bottom:0.8rem;">
+                    <li>총 <strong>6개 파트</strong> · 약 <strong>15~20분</strong> 소요</li>
+                    <li>중간에 나가도 <strong>자동 저장</strong> · 이어서 작성 가능</li>
+                    <li>모든 응답은 <strong>익명</strong> · 연구 목적으로만 사용</li>
+                </ul>
+            </div>
+            <div class="glass-card intro-card">
+                <h3 class="intro-card__heading">💰 사례비 안내</h3>
+                <p class="intro-card__text">설문에 성실히 참여해 주신 분께 <strong>사례비를 지급</strong>합니다.</p>
+                <div class="form-group" style="max-width:360px; margin:0.8rem auto 0;">
+                    <label class="form-label" for="phoneNumber">📱 핸드폰 번호 <span
+                            style="color:#f87171;">(필수)</span></label>
+                    <input type="tel" class="form-input" id="phoneNumber" placeholder="예: 010-1234-5678" required
+                        style="text-align:center; font-size:1.1rem; letter-spacing:1px;" />
+                </div>
+            </div>
+            <div class="nav-buttons" style="justify-content:center;">
+                <button class="btn btn-primary btn-start-survey" id="startSurveyBtn" type="button">📝 설문 시작하기</button>
+            </div>
+        </section>
+
+        <!-- PART 1: DRM Episodes -->
+        <section class="part-section" id="part1">
+            <h2 class="part-title">PART 1. 어제의 하루 재구성</h2>
+            <p class="part-description">어제 하루를 <strong>10개 내외의 에피소드</strong>로 나누어 주세요.</p>
+            <div class="glass-card episode-example">
+                <h3 class="episode-example__title">📋 에피소드 작성 예시</h3>
+                <div class="episode-example__table">
+                    <div class="episode-example__row episode-example__row--header">
+                        <div class="episode-example__cell">에피소드</div>
+                        <div class="episode-example__cell">시작~종료</div>
+                        <div class="episode-example__cell">활동</div>
+                        <div class="episode-example__cell">장소</div>
+                        <div class="episode-example__cell">함께한 사람</div>
+                    </div>
+                    <div class="episode-example__row">
+                        <div class="episode-example__cell episode-example__cell--num">1</div>
+                        <div class="episode-example__cell">08:20~08:50</div>
+                        <div class="episode-example__cell">등교 및 조례</div>
+                        <div class="episode-example__cell">교실</div>
+                        <div class="episode-example__cell">담임, 친구들</div>
+                    </div>
+                </div>
+                <p class="episode-example__tip">💡 아래에 평균적인 일과가 미리 입력되어 있습니다. 자신의 어제 일과에 맞게 수정해 주세요.</p>
+            </div>
+            <div class="episode-count" id="episodeCount"><span>📝</span> <span id="episodeCountText">에피소드 0개</span>
+            </div>
+            <div id="episodeList"></div>
+            <button class="add-episode-btn" id="addEpisodeBtn" type="button">＋ 에피소드 추가</button>
+            <div class="nav-buttons">
+                <div></div><button class="btn btn-primary" id="toPart2Btn" type="button">다음: 심층 진단 →</button>
+            </div>
+        </section>
+
+        <!-- PART 2: Episode Diagnosis -->
+        <section class="part-section" id="part2">
+            <h2 class="part-title">PART 2. 에피소드별 심층 진단</h2>
+            <p class="part-description"><strong>가장 기억에 남는 3~5개</strong> 에피소드를 골라 진단합니다.</p>
+            <div id="part2Selection">
+                <p class="select-hint">✨ 3~5개의 에피소드를 선택해 주세요</p>
+                <div class="episode-select-grid" id="episodeSelectGrid"></div>
+                <div id="selectedCountBadge" class="episode-count"><span>✅</span> <span id="selectedCountText">0개
+                        선택됨</span></div>
+                <button class="btn btn-primary btn-block" id="startDiagnosisBtn" type="button">선택 완료 — 진단 시작</button>
+            </div>
+            <div id="part2Diagnosis" style="display:none;">
+                <div id="diagnosisForms"></div>
+            </div>
+            <div class="nav-buttons">
+                <button class="btn btn-secondary" id="backToPart1Btn" type="button">← 이전</button>
+                <button class="btn btn-primary" id="toPart3Btn" type="button">다음: 과목·평가 →</button>
+            </div>
+        </section>
+
+        <!-- PART 3+4: Curriculum + Assessment (generated by JS) -->
+        <section class="part-section" id="part3">
+            <h2 class="part-title">PART 3. 과목 선택 · 평가</h2>
+            <p class="part-description">고교학점제 하에서의 과목 선택과 평가 방식에 대해 답변해 주세요.</p>
+            <div id="part3Content"></div>
+            <div class="nav-buttons">
+                <button class="btn btn-secondary" id="backToPart2Btn2" type="button">← 심층 진단</button>
+                <button class="btn btn-primary" id="toPart4Btn" type="button">다음: 정보·시간·기회 →</button>
+            </div>
+        </section>
+
+        <!-- PART 4: Info/Time/Opportunity (generated by JS) -->
+        <section class="part-section" id="part4">
+            <h2 class="part-title">PART 4. 종합: 정보 · 시간 · 기회</h2>
+            <p class="part-description">어제 하루와 학교생활 전반을 돌아보며 <strong>정보·시간·기회</strong>를 종합 평가합니다.</p>
+            <div id="part4Content"></div>
+            <div class="nav-buttons">
+                <button class="btn btn-secondary" id="backToPart3Btn" type="button">← 과목·평가</button>
+                <button class="btn btn-primary" id="toPart5Btn" type="button">다음: 웰빙·종합 →</button>
+            </div>
+        </section>
+
+        <!-- PART 5: Wellbeing (generated by JS) -->
+        <section class="part-section" id="part5">
+            <h2 class="part-title">PART 5. 웰빙 · 종합 의견</h2>
+            <p class="part-description"><strong>유데모니아(Eudaimonia)</strong> — 잠재력 실현과 의미 있는 성장 관점에서 학교생활을 돌아봅니다.</p>
+            <div id="part5Content"></div>
+            <div class="nav-buttons">
+                <button class="btn btn-secondary" id="backToPart4Btn" type="button">← 정보·시간·기회</button>
+                <button class="btn btn-primary" id="toPart6Btn" type="button">다음: 기본 정보 →</button>
+            </div>
+        </section>
+
+        <!-- PART 6: Basic Info -->
+        <section class="part-section" id="part6">
+            <h2 class="part-title">PART 6. 기본 정보</h2>
+            <p class="part-description">마지막으로 학교와 학년 정보를 입력해 주세요.</p>
+            <div id="part6Content"></div>
+            <div class="nav-buttons">
+                <button class="btn btn-secondary" id="backToPart5Btn" type="button">← 웰빙·종합</button>
+                <button class="btn btn-primary" id="completeBtn" type="button">✅ 설문 완료</button>
+            </div>
+        </section>
+
+        <!-- COMPLETION -->
+        <section class="part-section" id="completionScreen">
+            <div class="completion-screen">
+                <div class="completion-screen__icon">🎉</div>
+                <h2 class="completion-screen__title">설문이 완료되었습니다!</h2>
+                <p class="completion-screen__desc">소중한 응답에 감사드립니다.</p>
+                <div id="submitStatus" class="submit-status">
+                    <div class="submit-status__spinner"></div>
+                    <span class="submit-status__text">응답을 제출하고 있습니다...</span>
+                </div>
+            </div>
+        </section>
+    </div>
+    <div class="toast" id="toast"></div>
+    <script src="js/app.js"></script>
+</body>
+
+</html>
