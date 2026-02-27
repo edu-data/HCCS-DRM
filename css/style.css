@@ -1652,6 +1652,14 @@ input[type="range"]::-moz-range-thumb {
   gap: 0.25rem;
 }
 
+.likert-scale__hint {
+  text-align: center;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+
 .likert-radio {
   flex: 1;
   text-align: center;

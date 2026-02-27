@@ -480,10 +480,11 @@
 
     // ──────────────── Dynamic Content Generation ────────────────
     function makeLikert(name, max, hint1, hint2) {
-        let h = '<div class="likert-scale">';
+        let h = '';
+        if (hint1) h += `<div class="likert-scale__hint"><span>${hint1}</span></div>`;
+        h += '<div class="likert-scale">';
         for (let i = 1; i <= max; i++) h += `<label class="likert-radio"><input type="radio" name="${name}" value="${i}"><span>${i}</span></label>`;
         h += '</div>';
-        if (hint1) h += `<div class="likert-scale__hint"><span>${hint1}</span><span>${hint2}</span></div>`;
         return h;
     }
     function makeLikert7(name, label) {
@@ -510,24 +511,24 @@
                 { v: '진로연계', icon: '🎯', t: '진로·대학 전공 연계' }, { v: '성적유리', icon: '📊', t: '좋은 성적 받기 유리' },
                 { v: '흥미', icon: '💡', t: '나의 흥미와 관심' }, { v: '친구', icon: '👫', t: '친구들과 같은 수업' },
                 { v: '선생님추천', icon: '👨‍🏫', t: '선생님/부모님 추천' }])) +
-            qCard('Q2', '원하는 선택과목 개설 충분성', '<div class="likert-item">' + makeLikert('q2', 5, '① 전혀 아니다', '⑤ 매우 그렇다') + '</div>',
+            qCard('Q2', '원하는 선택과목 개설 충분성', '<div class="likert-item">' + makeLikert('q2', 5, '1점: 전혀 아님 ← → 5점: 매우 그렇다') + '</div>',
                 '나의 진로와 흥미에 맞는 선택과목이 우리 학교에 충분히 개설되어 있다.') +
-            qCard('Q3', '과목 선택 안내 및 정보 제공', '<div class="likert-item">' + makeLikert('q3', 5, '① 전혀 아니다', '⑤ 매우 그렇다') + '</div>',
+            qCard('Q3', '과목 선택 안내 및 정보 제공', '<div class="likert-item">' + makeLikert('q3', 5, '1점: 전혀 아님 ← → 5점: 매우 그렇다') + '</div>',
                 '과목 선택 시 학교(교사)로부터 충분한 정보와 안내를 받았다.') +
-            qCard('Q4', '진로와 선택과목의 연계', '<div class="likert-item">' + makeLikert('q4', 5, '① 전혀 아니다', '⑤ 매우 그렇다') + '</div>',
+            qCard('Q4', '진로와 선택과목의 연계', '<div class="likert-item">' + makeLikert('q4', 5, '1점: 전혀 아님 ← → 5점: 매우 그렇다') + '</div>',
                 '내가 선택한 과목들이 나의 진로와 잘 연결된다고 느낀다.') +
             qCard('Q5', '과목 선택 시 겪은 어려움 (복수 응답)', makeCheckboxGroup('q5',
                 ['과목 정보 부족', '원하는 과목 미개설', '시간표 충돌', '진로 미결정', '성적 부담', '친구와 다른 수업', '담당 교사 부족', '특별한 어려움 없음'])) +
             qCard('Q6', '과목 선택 개선 희망 사항', '<textarea class="form-textarea" id="q6" placeholder="과목 선택 제도에서 개선이 필요한 점을 자유롭게 적어 주세요."></textarea>') +
             // Assessment section
             '<h3 style="color:var(--text-primary);margin:2rem 0 1rem;text-align:center;">📊 평가 및 학점 이수</h3>' +
-            qCard('Q7', '성취평가제(A~E) 이해도', '<div class="likert-item">' + makeLikert('q7', 5, '① 전혀 아니다', '⑤ 매우 그렇다') + '</div>',
+            qCard('Q7', '성취평가제(A~E) 이해도', '<div class="likert-item">' + makeLikert('q7', 5, '1점: 전혀 아님 ← → 5점: 매우 그렇다') + '</div>',
                 '나는 성취평가제(절대평가 A~E)가 무엇인지 잘 이해하고 있다.') +
-            qCard('Q8', '성취평가제 공정성', '<div class="likert-item">' + makeLikert('q8', 5, '① 전혀 아니다', '⑤ 매우 그렇다') + '</div>',
+            qCard('Q8', '성취평가제 공정성', '<div class="likert-item">' + makeLikert('q8', 5, '1점: 전혀 아님 ← → 5점: 매우 그렇다') + '</div>',
                 '성취평가제(절대평가)는 학생을 공정하게 평가할 수 있는 제도라고 생각한다.') +
-            qCard('Q9', '5등급 상대평가 병기', '<div class="likert-item">' + makeLikert('q9', 5, '① 전혀 아니다', '⑤ 매우 그렇다') + '</div>',
+            qCard('Q9', '5등급 상대평가 병기', '<div class="likert-item">' + makeLikert('q9', 5, '1점: 전혀 아님 ← → 5점: 매우 그렇다') + '</div>',
                 '성취도(A~E)와 함께 5등급 상대평가를 병기하는 방식은 적절하다고 생각한다.') +
-            qCard('Q10', '미이수 제도 인식', '<div class="likert-item">' + makeLikert('q10', 5, '① 전혀 아니다', '⑤ 매우 그렇다') + '</div>',
+            qCard('Q10', '미이수 제도 인식', '<div class="likert-item">' + makeLikert('q10', 5, '1점: 전혀 아님 ← → 5점: 매우 그렇다') + '</div>',
                 '성취율 40% 미만 시 미이수(I) 처리 후 보충학습을 받는 제도는 학습에 도움이 된다.') +
             qCard('Q11', '현행 평가의 가장 큰 문제점', makeRadioGroup('q11', [
                 { v: '공정성', icon: '⚖️', t: '학교 간 평가 기준 차이' }, { v: '대입연계', icon: '🎓', t: '대입 반영 방법 불확실' },
@@ -568,20 +569,20 @@
     function buildPart5Content() {
         const el = $('#part5Content'); if (!el) return;
         el.innerHTML =
-            qCard('🌱 Q21', '자기 성장 실감', '<div class="likert-item">' + makeLikert('q21', 5, '① 전혀 아니다', '⑤ 매우 그렇다') + '</div>',
+            qCard('🌱 Q21', '자기 성장 실감', '<div class="likert-item">' + makeLikert('q21', 5, '1점: 전혀 아님 ← → 5점: 매우 그렇다') + '</div>',
                 '고교학점제를 통해 내가 성장하고 있다고 느낀다.') +
-            qCard('💪 Q22', '자기결정감 (자율성)', '<div class="likert-item">' + makeLikert('q22', 5, '① 전혀 아니다', '⑤ 매우 그렇다') + '</div>',
+            qCard('💪 Q22', '자기결정감 (자율성)', '<div class="likert-item">' + makeLikert('q22', 5, '1점: 전혀 아님 ← → 5점: 매우 그렇다') + '</div>',
                 '나는 학교생활에서 스스로 선택하고 결정할 수 있는 기회가 충분하다.') +
-            qCard('🔥 Q23', '몰입 경험', '<div class="likert-item">' + makeLikert('q23', 5, '① 전혀 아니다', '⑤ 매우 그렇다') + '</div>',
+            qCard('🔥 Q23', '몰입 경험', '<div class="likert-item">' + makeLikert('q23', 5, '1점: 전혀 아님 ← → 5점: 매우 그렇다') + '</div>',
                 '선택한 과목을 공부하면서 시간 가는 줄 모르고 몰입한 경험이 있다.') +
-            qCard('🤝 Q24', '관계 및 소속감', '<div class="likert-item">' + makeLikert('q24', 5, '① 전혀 아니다', '⑤ 매우 그렇다') + '</div>',
+            qCard('🤝 Q24', '관계 및 소속감', '<div class="likert-item">' + makeLikert('q24', 5, '1점: 전혀 아님 ← → 5점: 매우 그렇다') + '</div>',
                 '고교학점제 수업에서 선생님·친구와의 관계가 나의 학습에 긍정적 영향을 준다.') +
-            qCard('✨ Q25', '삶의 목적 및 의미', '<div class="likert-item">' + makeLikert('q25', 5, '① 전혀 아니다', '⑤ 매우 그렇다') + '</div>',
+            qCard('✨ Q25', '삶의 목적 및 의미', '<div class="likert-item">' + makeLikert('q25', 5, '1점: 전혀 아님 ← → 5점: 매우 그렇다') + '</div>',
                 '학교에서의 배움이 나의 미래와 삶의 방향을 찾는 데 의미가 있다고 느낀다.') +
             `<div class="glass-card"><h3 class="part3-q-title"><span class="part3-q-badge part3-q-badge--well">💚</span> Q26. 전반적 웰빙 자가 진단</h3>
             <p class="part3-q-desc">어제 하루 전체를 떠올렸을 때, 다음 감정을 얼마나 느꼈나요?<br><span class="part3-scale-hint">(1점: 전혀 아님 ← → 7점: 매우 그렇다)</span></p>
             <div class="likert-group">${makeLikert7('wb_happy', '😊 즐거움/행복감')}${makeLikert7('wb_confident', '💪 자신감/자기효능감')}${makeLikert7('wb_growth', '🌱 성장하고 있다는 느낌')}${makeLikert7('wb_anxious', '😰 불안감/초조함')}${makeLikert7('wb_bored', '😴 지루함/무기력함')}${makeLikert7('wb_depressed', '😞 우울함/슬픔')}</div></div>` +
-            qCard('Q27', '전반적 만족도', '<div class="likert-item">' + makeLikert('q27', 5, '① 전혀 아니다', '⑤ 매우 그렇다') + '</div>',
+            qCard('Q27', '전반적 만족도', '<div class="likert-item">' + makeLikert('q27', 5, '1점: 전혀 아님 ← → 5점: 매우 그렇다') + '</div>',
                 '전반적으로, 고교학점제에 만족한다.') +
             qCard('✨ Q28', '나의 이상적인 하루', '<textarea class="form-textarea" id="idealDay" placeholder="어제의 실제 하루와 비교했을 때, 나에게 이상적인 하루는 어떤 모습인가요?" rows="3"></textarea>') +
             qCard('📝 Q29', '자유 의견', '<textarea class="form-textarea" id="freeComment" placeholder="고교학점제에 대해 하고 싶은 말이 있다면 자유롭게 적어 주세요." rows="3"></textarea>');
@@ -614,9 +615,12 @@
                 parent.querySelectorAll('.barrier-option').forEach((o) => o.classList.remove('selected'));
                 opt.classList.add('selected');
                 const inp = opt.querySelector('input');
-                if (inp && inp.name === 'barrier') {
-                    state.barrier = inp.value;
-                    saveState();
+                if (inp) {
+                    inp.checked = true;
+                    if (inp.name === 'barrier') {
+                        state.barrier = inp.value;
+                        saveState();
+                    }
                 }
             });
         });
